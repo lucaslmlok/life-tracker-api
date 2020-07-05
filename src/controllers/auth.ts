@@ -1,11 +1,22 @@
 import { RequestHandler } from "express";
 import { validationResult } from "express-validator";
+import { Model } from "sequelize/types";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import User from "../models/User";
 import { JWT_SECRET } from "../util/config";
 import { signupMsg, loginMsg, generalMsg } from "../util/messages";
+
+const generateToken = (user: Model<any, any>): string => {
+  return jwt.sign(
+    {
+      email: user.get("email"),
+      userId: user.get("id"),
+    },
+    JWT_SECRET
+  );
+};
 
 export const signup: RequestHandler = async (req, res, next) => {
   try {
@@ -27,9 +38,12 @@ export const signup: RequestHandler = async (req, res, next) => {
       name,
     });
 
+    const token = generateToken(user);
+
     res.status(201).json({
       message: signupMsg.success,
       userId: user.get("id"),
+      token,
     });
   } catch (err) {
     next(err);
@@ -62,13 +76,7 @@ export const login: RequestHandler = async (req, res, next) => {
       throw error;
     }
 
-    const token = jwt.sign(
-      {
-        email: user.get("email"),
-        userId: user.get("id"),
-      },
-      JWT_SECRET
-    );
+    const token = generateToken(user);
 
     res.status(200).json({
       message: loginMsg.success,
@@ -78,4 +86,11 @@ export const login: RequestHandler = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+export const checkToken: RequestHandler = (req, res, next) => {
+  res.status(200).json({
+    message: generalMsg.success,
+    userId: req["userId"],
+  });
 };

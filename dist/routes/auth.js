@@ -37,6 +37,7 @@ const authController = __importStar(require("../controllers/auth"));
 const User_1 = __importDefault(require("../models/User"));
 const messages_1 = require("../util/messages");
 const form_config_1 = require("../util/form-config");
+const is_auth_1 = require("../middleware/is-auth");
 const router = express_1.Router();
 router.post("/signup", [
     express_validator_1.body("email")
@@ -54,4 +55,5 @@ router.post("/signup", [
     express_validator_1.body("name").trim(),
 ], authController.signup);
 router.post("/login", authController.login);
+router.get("/check-token", is_auth_1.isAuth, authController.checkToken);
 exports.default = router;

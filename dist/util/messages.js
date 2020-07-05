@@ -2,19 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginMsg = exports.signupMsg = exports.emailMsg = exports.generalMsg = void 0;
 exports.generalMsg = {
-    wrongStructure: "Wrong data structure",
+    wrongStructure: "wrong data structure",
+    noAuth: "not authenticated",
+    serverErr: "system error",
+    success: "success",
 };
 exports.emailMsg = {
-    invalid: "Invalid email.",
-    existed: "Email existed.",
+    invalid: "invalid email",
+    existed: "email existed",
 };
 exports.signupMsg = {
-    validateFail: "Validation failed.",
-    fail: "Signup failed.",
-    success: "User created.",
+    validateFail: "validation failed",
+    fail: "signup failed",
+    success: "user created",
 };
 exports.loginMsg = {
-    noUser: "Wrong email.",
-    wrongPwd: "Wrong password.",
-    success: "Login succeeded.",
+    noUser: "wrong email",
+    wrongPwd: "wrong password",
+    success: "login succeeded",
 };

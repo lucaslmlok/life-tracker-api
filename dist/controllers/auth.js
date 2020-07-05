@@ -12,13 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.signup = void 0;
+exports.checkToken = exports.login = exports.signup = void 0;
 const express_validator_1 = require("express-validator");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = __importDefault(require("../models/User"));
 const config_1 = require("../util/config");
 const messages_1 = require("../util/messages");
+const generateToken = (user) => {
+    return jsonwebtoken_1.default.sign({
+        email: user.get("email"),
+        userId: user.get("id"),
+    }, config_1.JWT_SECRET);
+};
 exports.signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const errors = express_validator_1.validationResult(req);
@@ -35,9 +41,11 @@ exports.signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             password: hashedPwd,
             name,
         });
+        const token = generateToken(user);
         res.status(201).json({
             message: messages_1.signupMsg.success,
             userId: user.get("id"),
+            token,
         });
     }
     catch (err) {
@@ -64,10 +72,7 @@ exports.login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
             error["statusCode"] = 401;
             throw error;
         }
-        const token = jsonwebtoken_1.default.sign({
-            email: user.get("email"),
-            userId: user.get("id"),
-        }, config_1.JWT_SECRET);
+        const token = generateToken(user);
         res.status(200).json({
             message: messages_1.loginMsg.success,
             userId: user.get("id"),
@@ -78,3 +83,9 @@ exports.login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         next(err);
     }
 });
+exports.checkToken = (req, res, next) => {
+    res.status(200).json({
+        message: messages_1.generalMsg.success,
+        userId: req["userId"],
+    });
+};

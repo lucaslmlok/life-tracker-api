@@ -1,20 +1,23 @@
 export const generalMsg = {
-  wrongStructure: "Wrong data structure",
+  wrongStructure: "wrong data structure",
+  noAuth: "not authenticated",
+  serverErr: "system error",
+  success: "success",
 };
 
 export const emailMsg = {
-  invalid: "Invalid email.",
-  existed: "Email existed.",
+  invalid: "invalid email",
+  existed: "email existed",
 };
 
 export const signupMsg = {
-  validateFail: "Validation failed.",
-  fail: "Signup failed.",
-  success: "User created.",
+  validateFail: "validation failed",
+  fail: "signup failed",
+  success: "user created",
 };
 
 export const loginMsg = {
-  noUser: "Wrong email.",
-  wrongPwd: "Wrong password.",
-  success: "Login succeeded.",
+  noUser: "wrong email",
+  wrongPwd: "wrong password",
+  success: "login succeeded",
 };
