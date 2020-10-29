@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import User from "../models/User";
-import { JWT_SECRET } from "../util/config";
+import { JWT_SECRET } from "../config";
 import { signupMsg, loginMsg, generalMsg } from "../util/messages";
 
 const generateToken = (user: Model<any, any>): string => {

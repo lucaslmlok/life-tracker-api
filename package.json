@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "watch": "tsc -w",
-    "dev": "nodemon dist/app.js",
-    "start": "node dist/app.ts"
+    "start": "nodemon dist/app.js"
   },
   "keywords": [],
   "author": "",

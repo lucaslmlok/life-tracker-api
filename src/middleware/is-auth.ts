@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { RequestHandler } from "express";
 
 import { generalMsg } from "../util/messages";
-import { JWT_SECRET } from "../util/config";
+import { JWT_SECRET } from "../config";
 
 export const isAuth: RequestHandler = (req, res, next) => {
   const token = req.get("Authorization");
